@@ -9,9 +9,8 @@ import { useGlobalContext } from '../Context';
 import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
-    const { token, setToken} = useGlobalContext();
+    const { token, setToken, showLogin, setShowLogin} = useGlobalContext();
     const [showMenu, setShowMenu] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
     const router = useRouter();
 
     const logOutUser = () => {

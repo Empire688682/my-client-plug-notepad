@@ -4,10 +4,13 @@ import styles from './SignUp.module.css';
 import axios from 'axios';
 import { IoEyeSharp } from 'react-icons/io5';
 import { FaEyeSlash, FaTimes } from 'react-icons/fa';
+import { useGlobalContext } from '../Context';
+import { useRouter } from 'next/navigation';
 
 const SignUp = ({setShowLogin}) => {
   const [loginStage, setLogInStage] = useState("Login");
   const [errorMessage, setErrorMessage] = useState(null);
+  const {setToken, url, token, setUser} = useGlobalContext();
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -16,6 +19,7 @@ const SignUp = ({setShowLogin}) => {
   });
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const router = useRouter()
 
   const clearInputField = () => {
     setData({
@@ -32,6 +36,43 @@ const SignUp = ({setShowLogin}) => {
     setData((prev) => ({ ...prev, [name]: value }));
     setErrorMessage("");
   };
+
+  const addUser = async () =>{
+    let newUrl = url;
+    try {
+        setLoading(true);
+        if(loginStage === "Login"){
+            newUrl += "api/login"
+        }
+        else{
+            newUrl += "api/signup"
+        };
+
+        const response = await axios.post(newUrl, data);
+        if(response){
+            setData({
+                name: "",
+                username: "",
+                email: "",
+                password: "",
+                pwdRepeat: ""
+              });
+              router.push("/");
+              setUser(response.data.user.username);
+              setToken(cookies.ge)
+        }
+    } catch (error) {
+        console.log("Error")
+    }
+    finally{
+        setLoading(false)
+    }
+  }
+
+  const handleFormSubmission = (e) =>{
+    e.preventDefault();
+    addUser();
+  }
 
 
   return (

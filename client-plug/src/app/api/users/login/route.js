@@ -64,4 +64,6 @@ const loginUser = async (req) => {
     }
 };
 
-export { loginUser };
+export async function POST(req) {
+    return loginUser(req);
+  }

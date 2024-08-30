@@ -71,4 +71,6 @@ const createUser = async (req) => {
     }
 };
 
-export { createUser };
+export async function POST(req) {
+    return createUser(req);
+  }
