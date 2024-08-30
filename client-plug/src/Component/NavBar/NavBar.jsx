@@ -4,11 +4,17 @@ import styles from './Navbar.module.css';
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link';
-import { useGlobalContex } from '../Context';
+import SignUp from '../SignUp/SignUp';
+import { useGlobalContext } from '../Context'; // Corrected line
 
 const NavBar = () => {
-    const {token, logOutUser} = useGlobalContex()
+    const {token, logOutUser} = useGlobalContext();
     const [showMenu, setShowMenu] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+
+    const openLogin = () => {
+        setShowLogin(true);
+    }
 
     return (
         <div className={styles.header}>
@@ -33,13 +39,11 @@ const NavBar = () => {
                                 <li onClick={() => setShowMenu(false)}>
                                     <button onClick={logOutUser} className={`${styles.menu_link} ${styles.button}`}><p>Log Out</p></button>
                                 </li>
-                            ) : 
-                            (
+                            ) : (
                                 <li onClick={() => setShowMenu(false)}>
                                     <Link className={styles.menu_link} href="/add">Signup</Link>
                                 </li>
-                            )
-                            }
+                            )}
                         </ul>
                     </nav>
                     <div className={styles.menu} onClick={() => setShowMenu(!showMenu)}>
@@ -47,6 +51,7 @@ const NavBar = () => {
                     </div>
                 </div>
             </div>
+            <SignUp />
         </div>
     );
 };

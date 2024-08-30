@@ -5,23 +5,23 @@ const GlobalContext = React.createContext();
 
 export const GlobalProvider= ({children}) => {
     const [token, setToken] = useState(true);
+    const url = ''
 
     const logOutUser = () => {
         setToken(false);
     };
   return (
-    <div>
       <GlobalContext.Provider value={{
         token,
         setToken,
-        logOutUser
+        logOutUser,
+        url
       }}>
         {children}
       </GlobalContext.Provider>
-    </div>
   )
 }
 
-export const useGlobalContex = () =>{
+export const useGlobalContext = () =>{
     return useContext(GlobalContext);
 }

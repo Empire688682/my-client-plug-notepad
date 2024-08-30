@@ -1,4 +1,4 @@
-.sign-up{
+.signUp {
     width: 100%;
     max-width: 500px;
     margin: 40px auto;
@@ -6,23 +6,28 @@
     padding: 0 5%;
 }
 
-.sign-up h1{
+.container {
+    text-align: center;
+}
+
+.signUp h1 {
     padding-bottom: 20px;
     font-size: 35px;
 }
 
-.error-message{
+.errorMessage {
     text-align: center;
     padding: 10px;
     color: white;
     background-color: #121212;
 }
 
-.sign-up form div{
+.container form div {
     position: relative;
     width: 100%;
 }
-.eye_icon{
+
+.eyeIcon {
     position: absolute;
     right: 30px;
     bottom: 20px;
@@ -30,9 +35,10 @@
     cursor: pointer;
 }
 
-.sign-up form div input, .sign-up form button{
+.container form div input, 
+.container form button {
     width: 90%;
-    padding: 15px; 
+    padding: 15px;
     margin: 10px auto;
     outline: none;
     font-size: 15px;
@@ -41,7 +47,7 @@
     cursor: pointer;
 }
 
-.sign-up form button{
+.container form button {
     background-color: var(--mint-green);
     transition: 0.3s ease-in-out;
     text-shadow: 0 0 2px rgb(4, 19, 4);
@@ -51,16 +57,17 @@
     border-radius: 5px;
 }
 
-.sign-up form button:hover{
+.container form button:hover {
     background-color: rgb(17, 209, 17);
     text-shadow: none;
 }
 
-.form-policy{
+.formPolicy {
     width: 90%;
     margin: 10px auto;
 }
-.form-policy input{
+
+.formPolicy input {
     width: 20px;
     height: 20px;
     background-color: black;
@@ -69,25 +76,8 @@
     transform: translateY(5px);
     margin-right: 10px;
 }
-.create-already span{
+
+.createAlready span {
     color: blue;
     cursor: pointer;
-}
-.user_agreement{
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    padding-top: 60px;
-    margin: 0 auto;
-}
-.user_agreement h3{
-    padding-bottom: 20px;
-}
-.user_agreement li{
-    padding-bottom: 15px;
-    font-size: 14px;
-}
-.user_agreement p{
-    font-size: 14px;
 }
