@@ -37,37 +37,47 @@ const SignUp = ({setShowLogin}) => {
     setErrorMessage("");
   };
 
-  const addUser = async () =>{
-    let newUrl = url;
+  const addUser = async () => {
+    let newUrl = url; // Assuming 'url' is a base URL like 'http://example.com/'
+
     try {
         setLoading(true);
-        if(loginStage === "Login"){
-            newUrl += "api/login"
+        
+        // Determine which API endpoint to use
+        if (loginStage === "Login") {
+            newUrl += "api/users/login";
+        } else {
+            newUrl += "api/users/signup";
         }
-        else{
-            newUrl += "api/signup"
-        };
 
         const response = await axios.post(newUrl, data);
-        if(response){
+
+        if (response && response.data.success) {
+            // Reset form data
             setData({
                 name: "",
                 username: "",
                 email: "",
                 password: "",
                 pwdRepeat: ""
-              });
-              router.push("/");
-              setUser(response.data.user.username);
-              setToken(cookies.ge)
+            });
+
+            // Set user and token
+            setUser(response.data.user.username);
+
+            // Redirect to the homepage
+            router.push("/");
+        }
+        else{
+            setErrorMessage(response.data.message)
         }
     } catch (error) {
-        console.log("Error")
+        console.log("Error:", error); // Log detailed error for debugging
+    } finally {
+        setLoading(false);
     }
-    finally{
-        setLoading(false)
-    }
-  }
+};
+
 
   const handleFormSubmission = (e) =>{
     e.preventDefault();
@@ -81,7 +91,7 @@ const SignUp = ({setShowLogin}) => {
       <div className={styles.container}>
         <h1>{loginStage === "Signup" ? "Signup" : "Login"}</h1>
         <h4>{loginStage === "Signup" ? "" : "WELCOME BACK"}</h4>
-        <form>
+        <form onSubmit={handleFormSubmission}>
           <div>
             <input required onChange={handleOnchange} value={data.username} type="text" placeholder="Username" name="username" />
           </div>

@@ -4,9 +4,21 @@ import styles from './HomePage.module.css';
 import Link from 'next/link'; 
 import { useGlobalContext } from '../Context'; 
 import { FaCircleArrowDown } from 'react-icons/fa6';
+import { useRouter } from 'next/navigation';
 
 const HomePage = () => {
-  const { token } = useGlobalContext();
+  const { token,setShowLogin } = useGlobalContext();
+  const router = useRouter()
+
+  const handleAddClick = () =>{
+    if(!token){
+        setShowLogin(true);
+    }
+    else{
+        setShowLogin(false);
+        router.push('/note')
+    }
+  }
 
   return (
     <div className={styles.ideasJotter}>
@@ -18,9 +30,9 @@ const HomePage = () => {
           <small className={styles.arrowDown}>
             <FaCircleArrowDown />
           </small>
-          <Link href='/note' className={styles.btn}>
+          <div  onClick={handleAddClick} className={styles.btn}>
             Add Your Note
-          </Link>
+          </div>
         </div>
         <div className={styles.row}>
           <div className={styles.col2}>
