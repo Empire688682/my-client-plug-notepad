@@ -3,7 +3,6 @@ import styles from './Navbar.module.css';
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { NavLink } from 'react-router-dom';
-import logo_Icon from '../Assert/notejot_logo.png';
 import { useGlobalContex } from '../Context';
 
 
@@ -11,16 +10,16 @@ const NavBar = () => {
     const {token, logOutUser } = useGlobalContex();
     const [showMenu, setShowMenu] = useState(false);
     return (
-        <div className="header">
-            <div className="navbar-container">
-                <div className="navbar">
-                    <div className="logo logo-container">
+        <div className={styles.header}>
+            <div className={styles.navbar-container}>
+                <div className={styles.navbar}>
+                    <div className={`${styles.logo} ${styles.logo-container}`}>
                         <NavLink to="/" >
-                            <img src={logo_Icon} alt="" />
+                            <img src='/notejot_logo.png' alt="" />
                         </NavLink>
                     </div>
                     <nav>
-                        <ul className={showMenu ? "show-mobile-menu" : ""}>
+                        <ul className={`${showMenu ? styles.show-mobile-menu : ""}`}>
                             <div>
                                 <li onClick={() => setShowMenu(false)}><NavLink className="menu_link" to="/">Home</NavLink></li>
                                 <li onClick={() => setShowMenu(false)}><NavLink className="menu_link" to="/about">About</NavLink></li>
