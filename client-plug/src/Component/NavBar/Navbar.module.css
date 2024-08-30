@@ -1,4 +1,4 @@
-.navbar-container{
+.navbarContainer{
     position: sticky;
     top: 0;
     z-index: 999;
@@ -28,7 +28,7 @@
     color: white;
 }
 
-.navbar .logo-container{
+.navbar .logoContainer{
     width: 250px;
     display: flex;
     align-items: center;
@@ -36,7 +36,7 @@
     margin-right: 20px;
 }
 
-.logo-container li{
+.logoContainer li{
     list-style: none;
     font-weight: bolder;
     text-transform: capitalize;
@@ -106,7 +106,7 @@
         transition:max-height .3s ease-in-out ;
     }
 
-    .navbar nav ul.show-mobile-menu{
+    .navbar nav ul.showMobileMenu{
         max-height: 300px;
     }
 

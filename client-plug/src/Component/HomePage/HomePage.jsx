@@ -1,37 +1,39 @@
-import React from 'react';
-import './HomePage.css';
-import noteJoter_Gif from '../Assert/notejot_gif.gif'
-import { NavLink } from 'react-router-dom';
-import { useGlobalContex } from '../Context';
-import { FaCircleArrowDown } from "react-icons/fa6";
+'use client'; // Ensure client-side rendering if using hooks or state management
 
+import React from 'react';
+import styles from './HomePage.module.css'; // Use a CSS Module for styles
+import Link from 'next/link'; // Use Next.js Link for navigation
+import { useGlobalContex } from '../Context'; // Assuming useGlobalContex is compatible
+import { FaCircleArrowDown } from 'react-icons/fa6';
 
 const HomePage = () => {
-    const {token} = useGlobalContex();
+  const { token } = useGlobalContex(); // Extract token from your global context
 
   return (
-    <div className="ideasJotter">
-        <div className="container">
-            <div className="ideasJotter-homepage">
-                <h1>Welcome to ideasjoter</h1>
-                <h2>Preserve Your Innovative Concepts for Future Exploration</h2>
-                <p>Jot down ideas you think is great</p>
-                <small className='arrow_down'>
-                <FaCircleArrowDown />
-                </small>
-                <NavLink to={!token? "/signup":"/add"} className='btn'>Add Your Note</NavLink>
-            </div> 
-            <div className="row">
-                <div className="col-2">
-                    <img src={noteJoter_Gif} alt="" />
-                </div>
-                <div className="col-2">
-                    <h1>Ideas Rule the World you know</h1>
-                </div>
-            </div>
+    <div className={styles.ideasJotter}>
+      <div className={styles.container}>
+        <div className={styles.ideasJotterHomepage}>
+          <h1>Welcome to ideasjoter</h1>
+          <h2>Preserve Your Innovative Concepts for Future Exploration</h2>
+          <p>Jot down ideas you think are great</p>
+          <small className={styles.arrowDown}>
+            <FaCircleArrowDown />
+          </small>
+          <Link href={!token ? '/signup' : '/add'} className={styles.btn}>
+            Add Your Note
+          </Link>
         </div>
+        <div className={styles.row}>
+          <div className={styles.col2}>
+            <img src='/notejot_gif.gif' alt="NoteJotter GIF" />
+          </div>
+          <div className={styles.col2}>
+            <h1>Ideas Rule the World you know</h1>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
