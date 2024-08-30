@@ -1,0 +1,192 @@
+.add-header {
+    padding: 50px 5%;
+}
+
+.add-header .btnCon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.add-header .btnCon a {
+    padding: 10px 30px;
+    cursor: pointer;
+    background-color: var(--mint-green);
+    border: none;
+    font-size: 20px;
+    border-radius: 20px;
+    color: white;
+    transition: .5s ease-in-out;
+    text-shadow: 1px 1px 1px black;
+    text-decoration: none;
+}
+.btnCon a:hover{
+    background-color: #4bee4b;
+    text-shadow: none;
+}
+
+.add-header h1 {
+    margin-top: 20px;
+    padding: 20px;
+    color: black;
+    border-radius: 5px;
+    background-color: var(--light-gray);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    font-size: 30px;
+}
+
+.add-header .user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: capitalize;
+    font-size: 25px;
+}
+
+.add-section {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding: 10px 5%;
+}
+
+.add-section .add-container {
+    padding: 20px;
+    border: 2px solid var(--mint-green);
+    border-radius: 5px;
+    margin-bottom: 80px;
+}
+
+.heading {
+    text-align: left;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.text {
+    text-align: left;
+}
+
+.add-section .add-container div {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.add-container div label {
+    margin-bottom: 10px;
+}
+
+.add-container div input {
+    padding: 10px;
+    outline-color: #98FF98;
+    border: rgb(112, 106, 106) 1px solid;
+    border-radius: 3px;
+    text-transform: capitalize;
+}
+
+.add-container div textarea {
+    resize: none;
+    padding: 10px;
+    outline-color: #98FF98;
+    border: rgb(112, 106, 106) 1px solid;
+    border-radius: 3px;
+}
+
+.submit-btn {
+    padding: 15px 40px;
+    background-color: var(--mint-green);
+    transition: 0.3s ease-in-out;
+    text-shadow: 0 0 2px green;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.submit-btn:hover {
+    background-color: rgb(17, 209, 17);
+    text-shadow: none;
+}
+
+.delete-btn {
+    padding: 15px 40px;
+    background-color: rgb(151, 24, 24);
+    transition: 0.3s ease-in-out;
+    text-shadow: 0 0 2px green;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.delete-btn:hover {
+    background-color: red;
+    text-shadow: none;
+}
+
+.add-section .user-ideas-container {
+    padding: 20px;
+    border: 2px solid var(--mint-green);
+    border-radius: 5px;
+}
+
+.userIdeasDetails {
+    position: relative;
+    margin-bottom: 60px;
+}
+
+.my-h2 {
+    margin-top: 30px;
+    text-transform: capitalize;
+}
+
+.my-h4 {
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: -20px;
+}
+
+.my-p {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.note_section {
+    padding: 20px;
+    border: 2px solid var(--mint-green);
+    border-radius: 5px;
+    margin-bottom: 80px;
+}
+
+.note_section .note {
+    margin-bottom: 30px;
+}
+
+.note_section .header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.note_section .header .title {
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.note_section .content {
+    font-size: 15px;
+}
+
+.note_section button {
+    padding: 5px 10px;
+    font-size: 20px;
+}
