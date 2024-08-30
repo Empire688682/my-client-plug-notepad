@@ -5,75 +5,70 @@ import validator from "validator";
 import bcrypt from 'bcryptjs'
 import dotenv from 'dotenv';
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 dotenv.config();
 
-const creatUser = async () =>{
+// Ensure the database connection is established
+connectDb();
 
+const createUser = async (req) => {
     try {
         const reqBody = await req.json();
-
-        const { username, email, password, pwdRepeat }= reqBody;
+        const { username, email, password, pwdRepeat } = reqBody;
     
-        if(!username || !email || !password ||!pwdRepeat ){
-            return new NextResponse.json({success:false, message:"!All Filed require"})
-        };
+        // Validate input
+        if (!username || !email || !password || !pwdRepeat) {
+            return NextResponse.json({ success: false, message: "All fields are required" });
+        }
         
-        if(!validator.isEmail(email)){
-            if(userExist){
-                return new NextResponse.json({success:false, message:"!Email not valid"});
-            };
+        if (!validator.isEmail(email)) {
+            return NextResponse.json({ success: false, message: "Invalid email" });
         }
     
-        const userExist = UserModel.find(email);
-        if(userExist){
-            return new NextResponse.json({success:false, message:"!User exist"});
-        };
+        // Check if user already exists
+        const userExist = await UserModel.findOne({ email });
+        if (userExist) {
+            return NextResponse.json({ success: false, message: "User already exists" });
+        }
     
-        if(password.legth < 8){
-            return new NextResponse.json({success:false, message:"!Password too short"});
-        };
+        if (password.length < 8) {
+            return NextResponse.json({ success: false, message: "Password too short" });
+        }
     
-        const isPassMatch = await bcrypt.compare(password, pwdRepeat);
-        if(!isPassMatch){
-            return new NextResponse.json({success:false, message:"!Password not match"});
-        };
+        if (password !== pwdRepeat) {
+            return NextResponse.json({ success: false, message: "Passwords do not match" });
+        }
     
-        const hashPwd = await bcrypt.hash(password, 10)
+        // Hash the password
+        const hashPwd = await bcrypt.hash(password, 10);
     
-        const newUser = await new UserModel({
+        // Create a new user
+        const newUser = new UserModel({
             username,
             email,
-            password:hashPwd
+            password: hashPwd
         });
     
-        const userData = [
-            username,
-            email,
-            password
-        ];
+        const user = await newUser.save();
     
-        await newUser.save();
+        // Create a JWT token
+        const token = jwt.sign({ userId:newUser._id }, process.env.TOKEN_KEY, { expiresIn: '2d' });
     
-        const token = jwt.sign(userData, process.env.TOKEN_KEY);
-    
-        const res = NextResponse.json({success:true, message:"User added"});
+        // Prepare the response with the token
+        const res = NextResponse.json({ success: true, user, message: "User created successfully" });
         res.cookies.set("token", token, {
-            httpOnly:true,
-            secure:process.env.NODE_ENV === "production",
-            sameSite:"lax",
-            maxAge:2*24*60*60,
-            path:"/",
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            maxAge: 2 * 24 * 60 * 60,
+            path: "/",
         });
-        return res
+        return res;
     
     } catch (error) {
-        console.log("Error", error);
-        return new NextResponse.json({message:"Error", success:false});
+        console.log("Error:", error);
+        return NextResponse.json({ success: false, message: "An error occurred" });
     }
 };
 
-export {creatUser}
-
-
+export { createUser };
