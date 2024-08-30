@@ -1,20 +1,50 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link';
 import SignUp from '../SignUp/SignUp';
-import { useGlobalContext } from '../Context'; // Corrected line
+import { useGlobalContext } from '../Context'; 
+import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
-    const {token, logOutUser} = useGlobalContext();
+    const { token, setToken} = useGlobalContext();
     const [showMenu, setShowMenu] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const router = useRouter();
 
-    const openLogin = () => {
+    const logOutUser = () => {
+        setToken(false);
+    };
+
+    useEffect(()=>{
+        if(!token){
+            router.push("/")
+        }
+    }, [logOutUser])
+
+    const handleSignupClick = ()=>{
+        setShowMenu(false);
         setShowLogin(true);
     }
+
+    useEffect(()=>{
+        if(showLogin){
+            document.body.style.overflow = "hidden"
+        }
+        else{
+             document.body.style.overflow = "auto"
+        }
+    },[showLogin]);
+
+    console.log("showLogin", showLogin);
+
+    useEffect(()=>{
+       if(!token){
+        router.push("/")
+       }
+    },[]);
 
     return (
         <div className={styles.header}>
@@ -32,7 +62,7 @@ const NavBar = () => {
                             </li>
                             {token ? (
                                 <li onClick={() => setShowMenu(false)}>
-                                    <Link className={styles.menu_link} href="/add">My Note</Link>
+                                    <Link className={styles.menu_link} href="/note">My Note</Link>
                                 </li>
                             ) : null}
                             {token ? (
@@ -40,8 +70,8 @@ const NavBar = () => {
                                     <button onClick={logOutUser} className={`${styles.menu_link} ${styles.button}`}><p>Log Out</p></button>
                                 </li>
                             ) : (
-                                <li onClick={() => setShowMenu(false)}>
-                                    <Link className={styles.menu_link} href="/add">Signup</Link>
+                                <li onClick={handleSignupClick}>
+                                    <p className={styles.menu_link} href="/add">Signup</p>
                                 </li>
                             )}
                         </ul>
@@ -51,7 +81,13 @@ const NavBar = () => {
                     </div>
                 </div>
             </div>
-            <SignUp />
+            {
+                showLogin ? <div className={styles.signupCon}>
+                    <SignUp setShowLogin={setShowLogin}/>
+                </div>
+                    :
+                    null
+            }
         </div>
     );
 };

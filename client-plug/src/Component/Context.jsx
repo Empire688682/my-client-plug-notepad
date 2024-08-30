@@ -6,16 +6,14 @@ const GlobalContext = React.createContext();
 export const GlobalProvider= ({children}) => {
     const [token, setToken] = useState(true);
     const url = ''
+    const user = "Jayempire"
 
-    const logOutUser = () => {
-        setToken(false);
-    };
   return (
       <GlobalContext.Provider value={{
         token,
         setToken,
-        logOutUser,
-        url
+        url,
+        user
       }}>
         {children}
       </GlobalContext.Provider>

@@ -1,22 +1,19 @@
 .navbarContainer{
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 88;
     padding: 0px 5%;
     background-color: var(--mint-green);
 }
-
 .navbar{
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 0;
 }
-
 .menu{
     display: none;
 }
-
 .button{
     background-color: black;
     font-weight: bolder;
@@ -27,7 +24,6 @@
     font-weight: bolder;
     color: white;
 }
-
 .navbar .logoContainer{
     width: 250px;
     display: flex;
@@ -35,36 +31,30 @@
     justify-content: space-between;
     margin-right: 20px;
 }
-
 .logoContainer li{
     list-style: none;
     font-weight: bolder;
     text-transform: capitalize;
 }
-
 .logo img{
     width: 80px;
     height: 80px;
 }
-
 .navbar nav ul{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 }
-
 .navbar nav ul div{
     display: flex;
     align-items:center ;
     justify-content:center ;
 }
-
 .navbar nav ul li{
     margin-right: 20px;
     list-style: none;
 }
-
 .navbar nav ul li .menu_link, .navbar .log-in-register li .menu_link{
     text-decoration: none;
     color: black;
@@ -72,22 +62,29 @@
     font-weight: 400;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
-
 .navbar nav ul li .menu_link.active, .navbar .log-in-register li .menu_link:hover{
     color: #ffffff;
     background-color: black;
 }
-
 .navbar .log-in-register{
     display: flex;
     flex-wrap: wrap;
     margin-left: 100px;
 }
-
 .log-in-register li{
     list-style: none;
     margin-right: 10px;
+}
+.signupCon{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5));
+    z-index: 99;
 }
 
 

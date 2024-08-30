@@ -1,13 +1,24 @@
 .signUp {
     width: 100%;
-    max-width: 500px;
+    max-width: 350px;
     margin: 40px auto;
     text-align: center;
-    padding: 0 5%;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: white;
+    position: relative;
 }
 
 .container {
     text-align: center;
+}
+
+.timeIcon{
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    font-size: 25px;
+    cursor: pointer;
 }
 
 .signUp h1 {

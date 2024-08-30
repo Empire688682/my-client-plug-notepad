@@ -1,13 +1,12 @@
-'use client'; // Ensure client-side rendering if using hooks or state management
-
+'use client'; 
 import React from 'react';
-import styles from './HomePage.module.css'; // Use a CSS Module for styles
-import Link from 'next/link'; // Use Next.js Link for navigation
-import { useGlobalContex } from '../Context'; // Assuming useGlobalContex is compatible
+import styles from './HomePage.module.css'; 
+import Link from 'next/link'; 
+import { useGlobalContext } from '../Context'; 
 import { FaCircleArrowDown } from 'react-icons/fa6';
 
 const HomePage = () => {
-  const { token } = useGlobalContex(); // Extract token from your global context
+  const { token } = useGlobalContext();
 
   return (
     <div className={styles.ideasJotter}>
@@ -19,7 +18,7 @@ const HomePage = () => {
           <small className={styles.arrowDown}>
             <FaCircleArrowDown />
           </small>
-          <Link href={!token ? '/signup' : '/add'} className={styles.btn}>
+          <Link href='/note' className={styles.btn}>
             Add Your Note
           </Link>
         </div>

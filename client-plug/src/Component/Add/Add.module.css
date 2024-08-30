@@ -1,15 +1,17 @@
-.add-header {
+/* Add.module.css */
+
+.addHeader {
     padding: 50px 5%;
 }
 
-.add-header .btnCon {
+.btnCon {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.add-header .btnCon a {
+.btnCon a {
     padding: 10px 30px;
     cursor: pointer;
     background-color: var(--mint-green);
@@ -21,12 +23,18 @@
     text-shadow: 1px 1px 1px black;
     text-decoration: none;
 }
-.btnCon a:hover{
+
+.btnCon a:hover {
     background-color: #4bee4b;
     text-shadow: none;
 }
 
-.add-header h1 {
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.addHeader h1 {
     margin-top: 20px;
     padding: 20px;
     color: black;
@@ -39,7 +47,7 @@
     font-size: 30px;
 }
 
-.add-header .user {
+.user {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -47,17 +55,15 @@
     font-size: 25px;
 }
 
-.add-section {
-    padding-top: 20px;
-    padding-bottom: 40px;
-    padding: 10px 5%;
+.addSection {
+    padding: 20px 5%;
 }
 
-.add-section .add-container {
+.addContainer {
     padding: 20px;
     border: 2px solid var(--mint-green);
     border-radius: 5px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 }
 
 .heading {
@@ -66,37 +72,27 @@
     font-weight: 500;
 }
 
-.text {
-    text-align: left;
-}
-
-.add-section .add-container div {
+.addContainer div {
     display: flex;
     flex-direction: column;
     margin: 20px 0;
 }
 
-.add-container div label {
+.addContainer label {
     margin-bottom: 10px;
 }
 
-.add-container div input {
+.addContainer input, 
+.addContainer textarea {
     padding: 10px;
     outline-color: #98FF98;
-    border: rgb(112, 106, 106) 1px solid;
+    border: 1px solid rgb(112, 106, 106);
     border-radius: 3px;
     text-transform: capitalize;
-}
-
-.add-container div textarea {
     resize: none;
-    padding: 10px;
-    outline-color: #98FF98;
-    border: rgb(112, 106, 106) 1px solid;
-    border-radius: 3px;
 }
 
-.submit-btn {
+.submitBtn {
     padding: 15px 40px;
     background-color: var(--mint-green);
     transition: 0.3s ease-in-out;
@@ -106,87 +102,45 @@
     border: none;
     border-radius: 5px;
     margin-top: 20px;
-    margin-right: 20px;
 }
 
-.submit-btn:hover {
+.submitBtn:hover {
     background-color: rgb(17, 209, 17);
     text-shadow: none;
 }
 
-.delete-btn {
-    padding: 15px 40px;
-    background-color: rgb(151, 24, 24);
-    transition: 0.3s ease-in-out;
-    text-shadow: 0 0 2px green;
-    color: #fff;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-}
-
-.delete-btn:hover {
-    background-color: red;
-    text-shadow: none;
-}
-
-.add-section .user-ideas-container {
-    padding: 20px;
-    border: 2px solid var(--mint-green);
-    border-radius: 5px;
-}
-
-.userIdeasDetails {
-    position: relative;
-    margin-bottom: 60px;
-}
-
-.my-h2 {
-    margin-top: 30px;
-    text-transform: capitalize;
-}
-
-.my-h4 {
-    text-align: center;
-    position: absolute;
-    right: 0;
-    top: -20px;
-}
-
-.my-p {
-    margin: 10px 0;
-    font-size: 18px;
-    font-weight: 300;
-}
-
-.note_section {
+.noteSection {
     padding: 20px;
     border: 2px solid var(--mint-green);
     border-radius: 5px;
     margin-bottom: 80px;
 }
 
-.note_section .note {
+.noteSection h2 {
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.note {
     margin-bottom: 30px;
 }
 
-.note_section .header {
+.noteHeader {
     display: flex;
     justify-content: space-between;
     margin: 20px 0;
 }
 
-.note_section .header .title {
+.noteTitle {
     text-transform: capitalize;
     font-weight: bold;
 }
 
-.note_section .content {
+.noteContent {
     font-size: 15px;
 }
 
-.note_section button {
+.noteButton {
     padding: 5px 10px;
     font-size: 20px;
 }

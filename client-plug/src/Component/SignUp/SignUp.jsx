@@ -1,17 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import styles from './SignUp.module.css'; // Use CSS Module for styling
+import styles from './SignUp.module.css';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Use Next.js router
 import { IoEyeSharp } from 'react-icons/io5';
-import { FaEyeSlash } from 'react-icons/fa';
-import { useGlobalContext } from '../Context';
+import { FaEyeSlash, FaTimes } from 'react-icons/fa';
 
-const SignUp = () => {
+const SignUp = ({setShowLogin}) => {
   const [loginStage, setLogInStage] = useState("Login");
   const [errorMessage, setErrorMessage] = useState(null);
-  const { url, token } = useGlobalContext(); // Adjust to match your context
-  const router = useRouter(); // Use Next.js router
   const [data, setData] = useState({
     name: "",
     username: "",
@@ -38,50 +34,14 @@ const SignUp = () => {
     setErrorMessage("");
   };
 
-  const handleFormSubmision = (e) => {
-    e.preventDefault();
-    signUpLogIn();
-  };
-
-  const signUpLogIn = async () => {
-    let newUrl = url;
-    if (loginStage === "Login") {
-      newUrl += "/api/user/login";
-    } else {
-      newUrl += "/api/user/register";
-    }
-
-    try {
-      setLoading(true);
-      const response = await axios.post(newUrl, data);
-
-      if (response.data.success) {
-        clearInputField();
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", response.data.User);
-        router.push('/'); // Navigate using Next.js router
-      } else {
-        setErrorMessage(response.data.message);
-      }
-    } catch (error) {
-      setErrorMessage("An error occurred, please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (token) {
-      router.replace("/"); // Use Next.js router for redirection
-    }
-  }, [token, router]);
 
   return (
     <div className={styles.signUp}>
+        <FaTimes className={styles.timeIcon} onClick={()=>setShowLogin(false)}/>
       <div className={styles.container}>
         <h1>{loginStage === "Signup" ? "Signup" : "Login"}</h1>
         <h4>{loginStage === "Signup" ? "" : "WELCOME BACK"}</h4>
-        <form onSubmit={handleFormSubmision}>
+        <form>
           <div>
             <input required onChange={handleOnchange} value={data.username} type="text" placeholder="Username" name="username" />
           </div>

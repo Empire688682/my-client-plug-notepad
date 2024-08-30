@@ -1,14 +1,14 @@
-.ideasJotter{
+.ideasJotter {
     padding: 60px 5%;
 }
 
-.ideasJotter h1{
+.ideasJotter h1 {
     color: var(--heading-title);
     font-size: 50px;
     font-weight: 200;
 }
 
-.ideasJotter .ideasJotter-homepage{
+.ideasJotterHomepage {
     background-color: #e9ecef;
     padding: 30px;
     text-align: center;
@@ -20,48 +20,29 @@
     margin-top: 10px;
 }
 
-.ideasJotter-homepage h1{
-    opacity: 1;
-    bottom: 0;
+.ideasJotterHomepage h1 {
     font-size: 60px;
     animation: looping linear 10s infinite;
     color: #121212;
     margin-bottom: 20px;
 }
 
-.ideasJotter .row{
-    align-items: center;
+.ideasJotterHomepage h2 {
+    font-size: 25px;
+    color: black;
 }
 
-.ideasJotter .col-2 img{
-    width: 100%;
-}
-
-@keyframes looping {
-    0%{
-        transform: translateX(100%);
-    }
-
-    100%{
-        transform: translateX(-100%);
-    }
-}
-
-.ideasJotter-homepage h2{
-   font-size: 25px;;
-   color: black;
-}
-
-.ideasJotter-homepage p{
+.ideasJotterHomepage p {
     color: #121212;
     margin: 20px 0;
 }
-.ideasJotter-homepage .arrow_down{
+
+.arrowDown {
     font-size: 30px;
     color: green;
 }
 
-.ideasJotter-homepage .btn{
+.btn {
     cursor: pointer;
     padding: 15px 25px;
     font-size: 20px;
@@ -78,19 +59,46 @@
     margin: 20px auto;
 }
 
-.ideasJotter-homepage .btn:hover{
+.btn:hover {
     background-color: var(--mint-green);
     text-shadow: none;
     color: green;
 }
 
-/*-------------media query--------------*/
-@media (max-width:680px){
-    .ideasJotter .col-2{
+.row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.col2 {
+    flex: 1;
+    text-align: center;
+    margin: 10px;
+}
+
+.col2 img {
+    width: 100%;
+    max-width: 400px;
+}
+
+@keyframes looping {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Media query for responsive design */
+@media (max-width: 680px) {
+    .col2 {
         flex-basis: 100%;
         margin-bottom: 20px;
     }
-    .col-2 img{
+    .col2 img {
         width: 100%;
     }
 }
