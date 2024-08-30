@@ -9,7 +9,6 @@ const SignUp = ({setShowLogin}) => {
   const [loginStage, setLogInStage] = useState("Login");
   const [errorMessage, setErrorMessage] = useState(null);
   const [data, setData] = useState({
-    name: "",
     username: "",
     email: "",
     password: "",
