@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Navbar.css';
+import styles from './Navbar.module.css';
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { NavLink } from 'react-router-dom';
