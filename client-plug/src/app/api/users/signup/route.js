@@ -2,7 +2,7 @@ import { connectDb } from "@/dbConfig/dbConfig.js";
 import { UserModel } from "@/models/userModel.js";
 import jwt from 'jsonwebtoken';
 import validator from "validator";
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { NextResponse } from "next/server";
 
@@ -52,17 +52,21 @@ const createUser = async (req) => {
         const user = await newUser.save();
     
         // Create a JWT token
-        const token = jwt.sign({ userId:newUser._id }, process.env.TOKEN_KEY, { expiresIn: '2d' });
+        const token = jwt.sign({ userId: newUser._id }, process.env.TOKEN_KEY, { expiresIn: '2d' });
+
+        // Log the token value before setting it in the cookie
+        console.log("Setting cookie with token:", token);
     
         // Prepare the response with the token
         const res = NextResponse.json({ success: true, user, message: "User created successfully" });
         res.cookies.set("token", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            maxAge: 2 * 24 * 60 * 60,
+            secure: process.env.NODE_ENV === "production", // Ensure secure flag is true in production
+            sameSite: "None", // If cross-origin, use 'None'
+            maxAge: 2 * 24 * 60 * 60, // 2 days
             path: "/",
         });
+
         return res;
     
     } catch (error) {
@@ -73,4 +77,4 @@ const createUser = async (req) => {
 
 export async function POST(req) {
     return createUser(req);
-  }
+}
