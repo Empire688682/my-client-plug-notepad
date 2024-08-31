@@ -14,8 +14,8 @@ export const GlobalProvider= ({children}) => {
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const userToken = await getUserToken();
-                
+                const userToken = getUserToken("66d25d8f408efa21e8a50046"); // Call function to get user token
+
                 if (userToken?.success === false) {
                     // Handle error if token retrieval fails
                     console.log(userToken.message);

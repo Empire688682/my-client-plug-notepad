@@ -67,6 +67,7 @@ const SignUp = ({setShowLogin}) => {
 
             // Redirect to the homepage
             router.push("/");
+            setShowLogin(false)
         }
         else{
             setErrorMessage(response.data.message)
