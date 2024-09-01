@@ -69,7 +69,8 @@ const SignUp = ({ setShowLogin }) => {
         setToken(response.data.token)
         // Redirect to the homepage
         router.push("/");
-        setShowLogin(false)
+        setShowLogin(false);
+        window.location.reload()
       }
       else {
         setErrorMessage(response.data.message)

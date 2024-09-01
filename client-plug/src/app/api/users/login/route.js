@@ -45,7 +45,7 @@ const loginUser = async (req) => {
         };
         
         // Create JWT token
-        const token = jwt.sign(tokenData, process.env.TOKEN_KEY, { expiresIn: '2d' });
+        const token = jwt.sign({id: user._id}, process.env.TOKEN_KEY, { expiresIn: '2d' });
     
         // Prepare the response with the token
         const res = NextResponse.json({ success: true, user, message: "User Login" });

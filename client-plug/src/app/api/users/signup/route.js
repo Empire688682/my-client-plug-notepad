@@ -52,10 +52,19 @@ const createUser = async (req) => {
         const user = await newUser.save();
     
         // Create a JWT token
-        const token = jwt.sign({ userId: newUser._id }, process.env.TOKEN_KEY, { expiresIn: '2d' });
+        const token = jwt.sign({ id: newUser._id }, process.env.TOKEN_KEY, { expiresIn: '2d' });
+
     
         // Prepare the response with the token
-        return NextResponse.json({ success: true, user, token, message: "User created successfully" });
+        const res = NextResponse.json({ success: true, user, token, message: "User created successfully" });
+        res.cookies.set("token", token, {
+            httpOnly:true,
+            secure:process.env.NODE_ENV === "production",
+            sameSite:"lax",
+            maxAge: 2 * 24 * 60 * 60, // 2 days
+            path:"/"
+        });
+        return res;
     
     } catch (error) {
         console.log("Error:", error);
