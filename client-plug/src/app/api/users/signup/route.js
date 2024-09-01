@@ -53,21 +53,9 @@ const createUser = async (req) => {
     
         // Create a JWT token
         const token = jwt.sign({ userId: newUser._id }, process.env.TOKEN_KEY, { expiresIn: '2d' });
-
-        // Log the token value before setting it in the cookie
-        console.log("Setting cookie with token:", token);
     
         // Prepare the response with the token
-        const res = NextResponse.json({ success: true, user, message: "User created successfully" });
-        res.cookies.set("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production", // Ensure secure flag is true in production
-            sameSite: "None", // If cross-origin, use 'None'
-            maxAge: 2 * 24 * 60 * 60, // 2 days
-            path: "/",
-        });
-
-        return res;
+        return NextResponse.json({ success: true, user, token, message: "User created successfully" });
     
     } catch (error) {
         console.log("Error:", error);

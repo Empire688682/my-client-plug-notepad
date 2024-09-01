@@ -14,7 +14,10 @@ const NavBar = () => {
     const router = useRouter();
 
     const logOutUser = () => {
-        setToken(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        router.push("/");
+        window.location.reload();
     };
 
     useEffect(()=>{

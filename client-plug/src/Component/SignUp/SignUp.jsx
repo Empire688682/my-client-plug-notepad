@@ -7,10 +7,10 @@ import { FaEyeSlash, FaTimes } from 'react-icons/fa';
 import { useGlobalContext } from '../Context';
 import { useRouter } from 'next/navigation';
 
-const SignUp = ({setShowLogin}) => {
+const SignUp = ({ setShowLogin }) => {
   const [loginStage, setLogInStage] = useState("Login");
   const [errorMessage, setErrorMessage] = useState(null);
-  const {setToken, url, token, setUser} = useGlobalContext();
+  const { url, setToken } = useGlobalContext();
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -41,46 +41,48 @@ const SignUp = ({setShowLogin}) => {
     let newUrl = url; // Assuming 'url' is a base URL like 'http://example.com/'
 
     try {
-        setLoading(true);
-        
-        // Determine which API endpoint to use
-        if (loginStage === "Login") {
-            newUrl += "api/users/login";
-        } else {
-            newUrl += "api/users/signup";
-        }
+      setLoading(true);
 
-        const response = await axios.post(newUrl, data);
+      // Determine which API endpoint to use
+      if (loginStage === "Login") {
+        newUrl += "api/users/login";
+      } else {
+        newUrl += "api/users/signup";
+      }
 
-        if (response && response.data.success) {
-            // Reset form data
-            setData({
-                name: "",
-                username: "",
-                email: "",
-                password: "",
-                pwdRepeat: ""
-            });
+      const response = await axios.post(newUrl, data);
 
-            // Set user and token
-            setUser(response.data.user.username);
+      if (response && response.data.success) {
+        // Reset form data
+        setData({
+          name: "",
+          username: "",
+          email: "",
+          password: "",
+          pwdRepeat: ""
+        });
 
-            // Redirect to the homepage
-            router.push("/");
-            setShowLogin(false)
-        }
-        else{
-            setErrorMessage(response.data.message)
-        }
+        // Set user to localstorage
+        localStorage.setItem("user", response.data.user.username);
+        // Save token to localstorage
+        localStorage.setItem("token", response.data.token);
+        setToken(response.data.token)
+        // Redirect to the homepage
+        router.push("/");
+        setShowLogin(false)
+      }
+      else {
+        setErrorMessage(response.data.message)
+      }
     } catch (error) {
-        console.log("Error:", error); // Log detailed error for debugging
+      console.log("Error:", error); // Log detailed error for debugging
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
 
-  const handleFormSubmission = (e) =>{
+  const handleFormSubmission = (e) => {
     e.preventDefault();
     addUser();
   }
@@ -88,14 +90,18 @@ const SignUp = ({setShowLogin}) => {
 
   return (
     <div className={styles.signUp}>
-        <FaTimes className={styles.timeIcon} onClick={()=>setShowLogin(false)}/>
+      <FaTimes className={styles.timeIcon} onClick={() => setShowLogin(false)} />
       <div className={styles.container}>
         <h1>{loginStage === "Signup" ? "Signup" : "Login"}</h1>
         <h4>{loginStage === "Signup" ? "" : "WELCOME BACK"}</h4>
         <form onSubmit={handleFormSubmission}>
-          <div>
-            <input required onChange={handleOnchange} value={data.username} type="text" placeholder="Username" name="username" />
-          </div>
+          {
+            loginStage === "Login" ? null
+              :
+              <div>
+                <input required onChange={handleOnchange} value={data.username} type="text" placeholder="Username" name="username" />
+              </div>
+          }
           <div>
             <input required onChange={handleOnchange} value={data.email} type="email" placeholder="Your Email" name="email" />
           </div>
