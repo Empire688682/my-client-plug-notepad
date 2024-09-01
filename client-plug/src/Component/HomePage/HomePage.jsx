@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 const HomePage = () => {
   const { token,setShowLogin } = useGlobalContext();
   const router = useRouter();
-  console.log('TOKEN:',token)
 
   const handleAddClick = () =>{
     if(!token){

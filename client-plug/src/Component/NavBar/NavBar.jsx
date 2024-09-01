@@ -40,8 +40,6 @@ const NavBar = () => {
         }
     },[showLogin]);
 
-    console.log("showLogin", showLogin);
-
     useEffect(()=>{
        if(!token){
         router.push("/")
