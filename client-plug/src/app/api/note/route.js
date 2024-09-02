@@ -12,6 +12,7 @@ const addNote = async (req) => {
         if (!userId) {
             return NextResponse.json({ success: false, message: "You are not authorized" });
         }
+
         const reqBody = await req.json();
         const { category, link, country, phone, email } = reqBody;
 
@@ -26,24 +27,32 @@ const addNote = async (req) => {
             link,
             country,
             phone,
-            email
+            email,
+            userId
         });
 
         const note = await newNote.save();
+        console.log("New note saved:", note);
 
         const user = await UserModel.findById(userId);
         if (!user) {
             return NextResponse.json({ success: false, message: "No user found" });
         }
 
-        // Initialize noteData as an array if it doesn't exist
-        if (!Array.isArray(user.noteData)) {
-            user.noteData = [];
-        }
+        // Log the current noteData
+        console.log("User noteData before update:", user.noteData);
 
-        // Push the new note into the noteData array
-        user.noteData.push(note);
+        // Update the user's noteData
+        user.noteData[note._id.toString()] = 1; // Add the note._id to noteData with an initial value
+
+        // Log the updated noteData
+        console.log("User noteData after update:", user.noteData);
+
+        // Save the updated user data
         await user.save();
+
+        // Log a confirmation after save
+        console.log("User data after saving:", user);
 
         return NextResponse.json({ success: true, note, message: "Note added successfully" });
 
