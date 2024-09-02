@@ -28,7 +28,7 @@ const Add = () => {
             const response = await axios.post(url + "api/note", data);
             if(response){
                 setData({
-                    category: "",
+                    category:"",
                     link: "",
                     country: "",
                     phone: "",

@@ -5,7 +5,6 @@ import { UserModel } from "@/models/userModel";
 import { getToken } from "@/helpers/getUserToken";
 
 connectDb();
-
 const addNote = async (req) => {
     try {
         const userId = await getToken(req);
@@ -42,8 +41,9 @@ const addNote = async (req) => {
         // Log the current noteData
         console.log("User noteData before update:", user.noteData);
 
-        // Update the user's noteData
-        user.noteData[note._id.toString()] = 1; // Add the note._id to noteData with an initial value
+        // Add the new note to the user's noteData
+        user.noteData = user.noteData || {};
+        user.noteData.set(note._id.toString())
 
         // Log the updated noteData
         console.log("User noteData after update:", user.noteData);
