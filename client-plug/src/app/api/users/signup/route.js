@@ -57,7 +57,7 @@ const createUser = async (req) => {
     
         // Prepare the response with the token
         const res = NextResponse.json({ success: true, user, token, message: "User created successfully" });
-        res.cookies.set("token", token, {
+        res.cookies.set("MWtoken", token, {
             httpOnly:true,
             secure:process.env.NODE_ENV === "production",
             sameSite:"lax",

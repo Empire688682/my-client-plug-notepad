@@ -5,46 +5,47 @@ import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import Link from 'next/link';
 import SignUp from '../SignUp/SignUp';
-import { useGlobalContext } from '../Context'; 
+import { useGlobalContext } from '../Context';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const NavBar = () => {
-    const { token, setToken, showLogin, setShowLogin} = useGlobalContext();
+    const { token, showLogin, setShowLogin, url } = useGlobalContext();
     const [showMenu, setShowMenu] = useState(false);
     const router = useRouter();
+
+    const clearCookies = async ()=>{
+        try {
+            const response = await axios.get(url + "api/users/logout");
+            if(response){
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const logOutUser = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         router.push("/");
-        window.location.reload();
+        clearCookies();
     };
 
-    useEffect(()=>{
-        if(!token){
-            router.push("/")
-        }
-    }, [logOutUser])
-
-    const handleSignupClick = ()=>{
+    const handleSignupClick = () => {
         setShowMenu(false);
         setShowLogin(true);
     }
 
-    useEffect(()=>{
-        if(showLogin){
-            document.body.style.overflow = "hidden"
+    useEffect(() => {
+        if (showLogin) {
+            window.scroll(0, 0);
+            document.body.style.overflow = "hidden";
         }
-        else{
-             document.body.style.overflow = "auto"
-        }
-    },[showLogin]);
-
-    useEffect(()=>{
-       if(!token){
-        router.push("/")
-       }
-    },[]);
+        else {
+            document.body.style.overflow = "auto";
+        };
+    }, [showLogin]);
 
     return (
         <div className={styles.header}>
@@ -83,7 +84,7 @@ const NavBar = () => {
             </div>
             {
                 showLogin ? <div className={styles.signupCon}>
-                    <SignUp setShowLogin={setShowLogin}/>
+                    <SignUp setShowLogin={setShowLogin} />
                 </div>
                     :
                     null

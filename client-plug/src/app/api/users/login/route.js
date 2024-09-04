@@ -36,20 +36,13 @@ const loginUser = async (req) => {
         if (!isPwdMatch) {
             return NextResponse.json({ success: false, message: "Incorrect password" });
         }
-
-        // Create token data
-        const tokenData = {
-            id: user._id,
-            userName: user.userName,
-            email: user.email
-        };
         
         // Create JWT token
         const token = jwt.sign({id: user._id}, process.env.TOKEN_KEY, { expiresIn: '2d' });
     
         // Prepare the response with the token
         const res = NextResponse.json({ success: true, user, message: "User Login" });
-        res.cookies.set("token", token, {
+        res.cookies.set("MWtoken", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
