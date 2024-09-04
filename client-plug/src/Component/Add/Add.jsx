@@ -5,10 +5,9 @@ import { useGlobalContext } from '../Context';
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 
 const Add = () => {
-    const { user, token, url } = useGlobalContext();
+    const { user } = useGlobalContext();
     const [note, setNote] = useState([]);
     const [data, setData] = useState({
         category: "",
@@ -17,7 +16,6 @@ const Add = () => {
         phone: "",
         email: "Nothin@gmail.com"
     });
-    const router = useRouter();
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
@@ -25,7 +23,7 @@ const Add = () => {
     const addNote = async () =>{
         try {
             setSaving(true)
-            const response = await axios.post(url + "api/note", data);
+            const response = await axios.post("api/note", data);
             if(response){
                 setData({
                     category:"",
@@ -62,10 +60,6 @@ const Add = () => {
         e.preventDefault();
         addNote();
     }
-
-    if(!token){
-        return null
-    };
 
     return (
         <div>
