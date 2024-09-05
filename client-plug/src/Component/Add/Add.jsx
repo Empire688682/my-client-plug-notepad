@@ -19,16 +19,14 @@ const Add = () => {
     const [dataStage, setDataStage] = useState("Compose");
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(false);
+    const [notesMessage, setNotesMessage] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const addNote = async ({noteId}) => {
+    const addNote = async () => {
         try {
-            setSaving(true)
-            const response = dataStage === "Compose"? 
+            setSaving(true) 
             await axios.post("api/note/addNote", data, { withCredentials: true }) 
-            :
-            await axios.post("api/note/edditNote", data, {noteId}, { withCredentials: true });
             if (response) {
                 setData({
                     category: "",
@@ -38,7 +36,6 @@ const Add = () => {
                     email: "Not@gmail.com"
                 })
                 window.location.reload();
-                setDataStage("Compose");
                 setMessage("Note saved");
                 setInterval(() => {
                     setMessage("")
@@ -63,22 +60,9 @@ const Add = () => {
         setData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleComposeSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         addNote();
-        fetchUserNote();
-    };
-
-    const getNoteId = (id) =>{
-        edditNote(id);
-        return id;
-    }
-
-    const handleEdditSubmit = (e) => {
-        e.preventDefault();
-        const note = getNoteId();
-        console.log("Note:", note)
-        addNote(note);
         fetchUserNote();
     };
 
@@ -88,14 +72,14 @@ const Add = () => {
             const response = await axios.get("api/note/allNote");
             if (response) {
                 setNotes(response.data.userNotes);
-            }
-            if(response.data.message === "No notes available"){
-                setMessage("No notes available")
+            } else if (response.data.message === "No notes available") {
+                setNotesMessage("No notes available");
+                setNotes([]);  // Clear notes if no notes are available
             }
         } catch (error) {
-            console.log("ERROR:", error)
-        }
-        finally {
+            console.log("ERROR:", error);
+            setNotesMessage("Failed to fetch notes");
+        } finally {
             setLoading(false);
         }
     };
@@ -115,8 +99,6 @@ const Add = () => {
     useEffect(() => {
         fetchUserNote();
     }, []);
-    
-    console.log("dataStage:", dataStage);
 
     return (
         <div>
@@ -131,8 +113,7 @@ const Add = () => {
             <div className={styles.addSection}>
                 <div className={styles.container}>
                     <div className={styles.addContainer}>
-                        {
-                            dataStage === "Compose"? <form onSubmit={handleComposeSubmit}>
+                        <form onSubmit={handleSubmit}>
                             <h2 className={styles.heading}>That your awesome note</h2>
                             <div>
                                 <label htmlFor="ctegory">Category</label>
@@ -166,47 +147,11 @@ const Add = () => {
                             }
                             <button type="submit" className={styles.submitBtn}>Save</button>
                         </form>
-                        :
-                        <form onSubmit={handleEdditSubmit}>
-                        <h2 className={styles.heading}>That your awesome note</h2>
-                        <div>
-                            <label htmlFor="ctegory">Category</label>
-                            <input id='ctegory' onChange={handleOnchange} type="text" value={data.ctegory} name='category' required />
-                        </div>
-                        <div>
-                            <label htmlFor="link">Link</label>
-                            <input id='link' onChange={handleOnchange} type="text" value={data.link} name='link' required />
-                        </div>
-                        <div>
-                            <label htmlFor="country">Country</label>
-                            <input id='country' onChange={handleOnchange} type="text" value={data.country} name='country' required />
-                        </div>
-                        <div>
-                            <label htmlFor="phone">Phone</label>
-                            <input id='phone' onChange={handleOnchange} type='tel' value={data.phone} name='phone' required />
-                        </div>
-                        <div>
-                            <label htmlFor="email">Email</label>
-                            <input id='email' onChange={handleOnchange} type='email' value={data.email} name='email' required />
-                        </div>
-                        {
-                            error ? <div>
-                                {message}
-                            </div>
-                                :
-                                <div>
-                                    <p>{saving ? "Saving......" : null}</p> <br />
-                                    {message}
-                                </div>
-                        }
-                        <button type="submit" className={styles.submitBtn}>Save</button>
-                    </form>
-                        }
                     </div>
                     <div className={styles.noteSection} id='Notes'>
                         <h2>MY NOTES</h2>
                         {
-                                loading ?
+                           notes && loading ?
                                 <h3>Loading....</h3> :
                                 notes.map((note) => {
                                     return <div key={note._id} className={styles.note_Con}>
