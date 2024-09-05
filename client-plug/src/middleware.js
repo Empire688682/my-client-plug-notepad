@@ -4,7 +4,6 @@ export async function middleware(request) {
   try {
     const path = request.nextUrl.pathname;
     const token = request.cookies.get("MWtoken")?.value || "";
-    console.log("tokenAfter:", token);
 
     const isPrivate = path === "/note";
     if (isPrivate && !token) {

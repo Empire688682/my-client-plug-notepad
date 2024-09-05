@@ -23,7 +23,7 @@ const Add = () => {
     const addNote = async () =>{
         try {
             setSaving(true)
-            const response = await axios.post("api/note", data);
+            const response = await axios.post("api/note/addNote", data);
             if(response){
                 setData({
                     category:"",
@@ -59,7 +59,9 @@ const Add = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         addNote();
-    }
+    };
+
+
 
     return (
         <div>
