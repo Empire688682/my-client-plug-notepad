@@ -43,12 +43,9 @@ const addNote = async (req) => {
 
         // Add the new note to the user's noteData
         user.noteData = user.noteData || {};
-        user.noteData.set(note._id.toString())
-
-        // Log the updated noteData
-        console.log("User noteData after update:", user.noteData);
-
-        // Save the updated user data
+        user.noteData.set(note._id.toString(), {
+            id: note._id
+        });
         await user.save();
 
         // Log a confirmation after save

@@ -23,7 +23,7 @@ const Add = () => {
     const addNote = async () =>{
         try {
             setSaving(true)
-            const response = await axios.post("api/note/addNote", data);
+            const response = await axios.post("api/note/addNote", data, { withCredentials: true });
             if(response){
                 setData({
                     category:"",

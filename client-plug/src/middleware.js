@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 
-export async function middleware(request) {
+export async function middleware(req) {
   try {
-    const path = request.nextUrl.pathname;
-    const token = request.cookies.get("MWtoken")?.value || "";
+    const path = req.nextUrl.pathname;
+    const token = req.cookies.get("MWtoken")?.value || "";
 
     const isPrivate = path === "/note";
     if (isPrivate && !token) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
   } catch (error) {
     console.log("ERROR:", error);
