@@ -59,8 +59,24 @@ const Add = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         addNote();
+        fetchUserNote();
     };
 
+    const fetchUserNote = async () =>{
+        try {
+            const response = await axios.get("api/note/allNote");
+            if(response){
+                setNote(response.data.userNotes);
+            }
+        } catch (error) {
+            console.log("ERROR:", error)
+        }
+    }
+
+    useEffect(()=>{
+        fetchUserNote();
+        console(note);
+    },[])
 
 
     return (

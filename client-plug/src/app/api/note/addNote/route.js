@@ -31,25 +31,19 @@ const addNote = async (req) => {
         });
 
         const note = await newNote.save();
-        console.log("New note saved:", note);
 
         const user = await UserModel.findById(userId);
         if (!user) {
             return NextResponse.json({ success: false, message: "No user found" });
         }
 
-        // Log the current noteData
-        console.log("User noteData before update:", user.noteData);
-
         // Add the new note to the user's noteData
         user.noteData = user.noteData || {};
         user.noteData.set(note._id.toString(), {
             id: note._id
         });
+        
         await user.save();
-
-        // Log a confirmation after save
-        console.log("User data after saving:", user);
 
         return NextResponse.json({ success: true, note, message: "Note added successfully" });
 
