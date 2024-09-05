@@ -11,8 +11,6 @@ const editNote = async (req) => {
     const reqBody = await req.json();
     const { noteId, category, link, country, phone, email } = reqBody;
 
-    console.log("NoteId", noteId);
-
     // Check for missing fields
     if (!noteId || !category || !link || !country || !phone || !email) {
       return NextResponse.json({

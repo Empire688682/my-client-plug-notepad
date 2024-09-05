@@ -154,6 +154,9 @@
 .note_Con div{
     margin-bottom: 5px;
 }
+.note_Con div p{
+    font-size: 15px;
+}
 .btn_Con{
     display: flex;
     align-items: center;
@@ -169,4 +172,21 @@
     color: red;
     cursor: pointer;
     font-size: 25px;
+}
+
+.edit_Con input{
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.edit_Con button{
+    padding: 5px 10px;
+    background-color: var(--mint-green);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+    font-weight: bolder;
+    text-shadow: 0 0 2px green;
 }
