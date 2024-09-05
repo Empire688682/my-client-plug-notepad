@@ -22,7 +22,7 @@ const Add = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const addNote = async () => {
+    const addNote = async ({noteId}) => {
         try {
             setSaving(true)
             const response = dataStage === "Compose"? 
@@ -63,9 +63,21 @@ const Add = () => {
         setData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleComposeSubmit = (e) => {
         e.preventDefault();
         addNote();
+        fetchUserNote();
+    };
+
+    const getNoteId = (id) =>{
+        edditNote(id);
+        return id;
+    }
+
+    const handleEdditSubmit = (e) => {
+        e.preventDefault();
+        const note = getNoteId();
+        addNote({noteId:note._id});
         fetchUserNote();
     };
 
@@ -84,7 +96,7 @@ const Add = () => {
         }
     };
 
-    const edditNote = async ({note}) =>{
+    const edditNote = async (note) =>{
         setDataStage("Eddit");
         setData({
             category: `${note.category}`,
@@ -94,13 +106,13 @@ const Add = () => {
             email: `${note.email}`
         });
         window.scroll(0, 420)
-    }
+    };
 
     useEffect(() => {
         fetchUserNote();
     }, []);
     
-    console.log(dataStage);
+    console.log("dataStage:", dataStage);
 
     return (
         <div>
@@ -115,7 +127,8 @@ const Add = () => {
             <div className={styles.addSection}>
                 <div className={styles.container}>
                     <div className={styles.addContainer}>
-                        <form onSubmit={handleSubmit}>
+                        {
+                            dataStage === "Compose"? <form onSubmit={handleComposeSubmit}>
                             <h2 className={styles.heading}>That your awesome note</h2>
                             <div>
                                 <label htmlFor="ctegory">Category</label>
@@ -149,6 +162,42 @@ const Add = () => {
                             }
                             <button type="submit" className={styles.submitBtn}>Save</button>
                         </form>
+                        :
+                        <form onSubmit={handleEdditSubmit}>
+                        <h2 className={styles.heading}>That your awesome note</h2>
+                        <div>
+                            <label htmlFor="ctegory">Category</label>
+                            <input id='ctegory' onChange={handleOnchange} type="text" value={data.ctegory} name='category' required />
+                        </div>
+                        <div>
+                            <label htmlFor="link">Link</label>
+                            <input id='link' onChange={handleOnchange} type="text" value={data.link} name='link' required />
+                        </div>
+                        <div>
+                            <label htmlFor="country">Country</label>
+                            <input id='country' onChange={handleOnchange} type="text" value={data.country} name='country' required />
+                        </div>
+                        <div>
+                            <label htmlFor="phone">Phone</label>
+                            <input id='phone' onChange={handleOnchange} type='tel' value={data.phone} name='phone' required />
+                        </div>
+                        <div>
+                            <label htmlFor="email">Email</label>
+                            <input id='email' onChange={handleOnchange} type='email' value={data.email} name='email' required />
+                        </div>
+                        {
+                            error ? <div>
+                                {message}
+                            </div>
+                                :
+                                <div>
+                                    <p>{saving ? "Saving......" : null}</p> <br />
+                                    {message}
+                                </div>
+                        }
+                        <button type="submit" className={styles.submitBtn}>Save</button>
+                    </form>
+                        }
                     </div>
                     <div className={styles.noteSection} id='Notes'>
                         <h2>MY NOTES</h2>
@@ -174,7 +223,7 @@ const Add = () => {
                                             <h4>Email: <a href={`mailto:${note.email}`}>{note.email}</a></h4>
                                         </div>
                                         <div className={styles.btn_Con}>
-                                            <div className={styles.eddit_btn} onClick={()=>edditNote({note})}>
+                                            <div className={styles.eddit_btn} onClick={()=>getNoteId(note)}>
                                             <MdEdit />
                                             </div>
                                             <div className={styles.delete_btn}>
