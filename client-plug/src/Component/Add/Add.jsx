@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 import React, { useEffect, useState } from 'react';
 import styles from './Add.module.css';
 import { useGlobalContext } from '../Context';
@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const Add = () => {
     const { user } = useGlobalContext();
-    const [note, setNote] = useState([]);
+    const [notes, setNotes] = useState([]);
     const [data, setData] = useState({
         category: "",
         link: "",
@@ -16,29 +16,36 @@ const Add = () => {
         phone: "",
         email: "Nothin@gmail.com"
     });
+    const [dataStage, setDataStage] = useState("Compose");
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const addNote = async () =>{
+    const addNote = async () => {
         try {
             setSaving(true)
-            const response = await axios.post("api/note/addNote", data, { withCredentials: true });
-            if(response){
+            const response = dataStage === "Compose"? 
+            await axios.post("api/note/addNote", data, { withCredentials: true }) 
+            :
+            await axios.post("api/note/edditNote", data, {noteId}, { withCredentials: true });
+            if (response) {
                 setData({
-                    category:"",
+                    category: "",
                     link: "",
                     country: "",
                     phone: "",
                     email: "Not@gmail.com"
                 })
+                window.location.reload();
+                setDataStage("Compose");
                 setMessage("Note saved");
-                setInterval(()=>{
+                setInterval(() => {
                     setMessage("")
-                },2000);
+                }, 2000);
                 setError(false)
             }
-            else{
+            else {
                 setMessage("Error");
                 setError(true)
             };
@@ -46,38 +53,54 @@ const Add = () => {
         } catch (error) {
             console.log("ERROR");
         }
-        finally{
+        finally {
             setSaving(false);
         }
     }
 
-    const handleOnchange = (e)=>{
-        const {value, name} = e.target
-        setData((prev) => ({...prev, [name]:value}));
+    const handleOnchange = (e) => {
+        const { value, name } = e.target
+        setData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault();
         addNote();
         fetchUserNote();
     };
 
-    const fetchUserNote = async () =>{
+    const fetchUserNote = async () => {
         try {
+            setLoading(true);
             const response = await axios.get("api/note/allNote");
-            if(response){
-                setNote(response.data.userNotes);
+            if (response) {
+                setNotes(response.data.userNotes);
             }
         } catch (error) {
             console.log("ERROR:", error)
         }
+        finally {
+            setLoading(false);
+        }
+    };
+
+    const edditNote = async ({note}) =>{
+        setDataStage("Eddit");
+        setData({
+            category: `${note.category}`,
+            link: `${note.link}`,
+            country: `${note.country}`,
+            phone: `${note.phone}`,
+            email: `${note.email}`
+        });
+        window.scroll(0, 420)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchUserNote();
-        console(note);
-    },[])
-
+    }, []);
+    
+    console.log(dataStage);
 
     return (
         <div>
@@ -115,20 +138,52 @@ const Add = () => {
                                 <input id='email' onChange={handleOnchange} type='email' value={data.email} name='email' required />
                             </div>
                             {
-                                error? <div>
-                                {message}
+                                error ? <div>
+                                    {message}
                                 </div>
-                                :
-                                <div>
-                                <p>{saving? "Saving......":null}</p> <br />
-                                {message}
-                                </div>
+                                    :
+                                    <div>
+                                        <p>{saving ? "Saving......" : null}</p> <br />
+                                        {message}
+                                    </div>
                             }
                             <button type="submit" className={styles.submitBtn}>Save</button>
                         </form>
                     </div>
                     <div className={styles.noteSection} id='Notes'>
                         <h2>MY NOTES</h2>
+                        {
+                            notes &&
+                                loading ?
+                                <h3>Loading....</h3> :
+                                notes.map((note) => {
+                                    return <div key={note._id} className={styles.note_Con}>
+                                        <div>
+                                            <h4>Category: {note.category}</h4>
+                                        </div>
+                                        <div>
+                                            <h4>Link: <a href={note.link} target="_blank" rel="noopener noreferrer">{note.link}</a></h4>
+                                        </div>
+                                        <div>
+                                            <h4>Country: {note.country}</h4>
+                                        </div>
+                                        <div>
+                                            <h4>Phone: <a href={`tel:${note.phone}`}>{note.phone}</a></h4>
+                                        </div>
+                                        <div>
+                                            <h4>Email: <a href={`mailto:${note.email}`}>{note.email}</a></h4>
+                                        </div>
+                                        <div className={styles.btn_Con}>
+                                            <div className={styles.eddit_btn} onClick={()=>edditNote({note})}>
+                                            <MdEdit />
+                                            </div>
+                                            <div className={styles.delete_btn}>
+                                            <MdDelete />
+                                            </div>
+                                        </div>
+                                    </div>
+                                })
+                        }
                     </div>
                 </div>
             </div>

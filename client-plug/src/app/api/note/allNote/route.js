@@ -14,6 +14,9 @@ const fetchUserNote = async (req) =>{
         };
 
         const noteIds =  Array.from(user.noteData.keys());
+        if (noteIds.length === 0) {
+            return NextResponse.json({ success: false, message: "No notes available" });
+        }
 
         const userNotes = await NoteModel.find({_id:{$in:noteIds}});
 

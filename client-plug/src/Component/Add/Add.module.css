@@ -111,7 +111,7 @@
 
 .noteSection {
     padding: 20px;
-    border: 2px solid var(--mint-green);
+    border: 2px solid gray;
     border-radius: 5px;
     margin-bottom: 80px;
 }
@@ -143,4 +143,30 @@
 .noteButton {
     padding: 5px 10px;
     font-size: 20px;
+}
+
+.note_Con{
+    border: 2px solid var(--mint-green);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 3px;
+}
+.note_Con div{
+    margin-bottom: 5px;
+}
+.btn_Con{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+.eddit_btn{
+    color: var(--mint-green);
+    cursor: pointer;
+    font-size: 25px;
+}
+.delete_btn{
+    color: red;
+    cursor: pointer;
+    font-size: 25px;
 }
