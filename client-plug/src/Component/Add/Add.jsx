@@ -77,7 +77,8 @@ const Add = () => {
     const handleEdditSubmit = (e) => {
         e.preventDefault();
         const note = getNoteId();
-        addNote({noteId:note._id});
+        console.log("Note:", note)
+        addNote(note);
         fetchUserNote();
     };
 
@@ -87,6 +88,9 @@ const Add = () => {
             const response = await axios.get("api/note/allNote");
             if (response) {
                 setNotes(response.data.userNotes);
+            }
+            if(response.data.message === "No notes available"){
+                setMessage("No notes available")
             }
         } catch (error) {
             console.log("ERROR:", error)
@@ -202,7 +206,6 @@ const Add = () => {
                     <div className={styles.noteSection} id='Notes'>
                         <h2>MY NOTES</h2>
                         {
-                            notes &&
                                 loading ?
                                 <h3>Loading....</h3> :
                                 notes.map((note) => {
