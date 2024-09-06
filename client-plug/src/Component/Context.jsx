@@ -8,7 +8,6 @@ export const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [showLogin, setShowLogin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const url = 'http://localhost:3000/';
 
   // Check if running in the browser
   useEffect(() => {
@@ -25,7 +24,6 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider value={{
       token,
       setToken,
-      url,
       user,
       setUser,
       showLogin,

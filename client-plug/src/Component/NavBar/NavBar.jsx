@@ -10,13 +10,13 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const NavBar = () => {
-    const { token, showLogin, setShowLogin, url } = useGlobalContext();
+    const { token, showLogin, setShowLogin} = useGlobalContext();
     const [showMenu, setShowMenu] = useState(false);
     const router = useRouter();
 
     const clearCookies = async ()=>{
         try {
-            const response = await axios.get(url + "api/users/logout");
+            const response = await axios.get("api/users/logout");
             if(response){
                 window.location.reload();
             }

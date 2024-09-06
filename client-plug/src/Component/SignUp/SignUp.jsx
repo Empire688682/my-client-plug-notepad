@@ -19,7 +19,8 @@ const SignUp = ({ setShowLogin }) => {
   });
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
+  const [endpoint, setEndpoint] = useState(null);
 
   const clearInputField = () => {
     setData({
@@ -37,20 +38,20 @@ const SignUp = ({ setShowLogin }) => {
     setErrorMessage("");
   };
 
-  const addUser = async () => {
-    let newUrl = url; // Assuming 'url' is a base URL like 'http://example.com/'
+  const endpointController = () =>{
+    if (loginStage === "Login") {
+      setEndpoint("api/users/login");
+     } else {
+       setEndpoint("api/users/signup");
+     }
+  }
 
+  const addUser = async () => {
     try {
       setLoading(true);
 
-      // Determine which API endpoint to use
-      if (loginStage === "Login") {
-        newUrl += "api/users/login";
-      } else {
-        newUrl += "api/users/signup";
-      }
-
-      const response = await axios.post(newUrl, data);
+      const response = await axios.post(endpoint, data);
+      console.log("NEWURL:", endpoint)
 
       if (response && response.data.success) {
         // Reset form data
@@ -85,6 +86,7 @@ const SignUp = ({ setShowLogin }) => {
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
+    endpointController()
     addUser();
   }
 
