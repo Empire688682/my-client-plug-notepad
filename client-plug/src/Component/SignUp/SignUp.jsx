@@ -99,7 +99,7 @@ const SignUp = ({ setShowLogin }) => {
         <h4>{loginStage === "Signup" ? "" : "WELCOME BACK"}</h4>
         <form onSubmit={handleFormSubmission}>
           {
-            loginStage === "Login" ? null
+            loginStage === "Login"? null
               :
               <div>
                 <input required onChange={handleOnchange} value={data.username} type="text" placeholder="Username" name="username" />
